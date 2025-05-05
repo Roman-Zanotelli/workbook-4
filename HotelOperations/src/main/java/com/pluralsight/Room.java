@@ -36,4 +36,22 @@ public class Room {
     public boolean isAvailable(){
         return !(isDirty || isOccupied);
     }
+
+    //Methods
+    public boolean checkIn(){ //false if already occupied
+        if(isOccupied) return false;
+        isOccupied = true;
+        isDirty = true;
+        return true;
+    }
+    public boolean checkout(){ //false if already not occupied
+        if(!isOccupied) return false;
+        isOccupied = false;
+        return true;
+    }
+    public boolean cleanroom(){ //false if already clean
+        if(!isDirty) return false;
+        isDirty = false;
+        return true;
+    }
 }

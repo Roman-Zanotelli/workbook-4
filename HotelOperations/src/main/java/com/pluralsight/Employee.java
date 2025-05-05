@@ -27,7 +27,7 @@ public class Employee {
         return Math.min(40f, hoursWorked);
     }
     double getOvertimeHours(){
-        return Math.min(0, hoursWorked - 40);
+        return Math.max(0, hoursWorked - 40);
     }
     public UUID getEmployeeId() {
         return employeeId;

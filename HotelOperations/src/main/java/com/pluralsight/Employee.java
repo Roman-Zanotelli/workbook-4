@@ -51,32 +51,71 @@ public class Employee {
     }
 
     //Methods
-    public LocalDateTime punchIn(){ //returns null if already punched in
-        if(punchIn != null) return null; //check if their already punched in
-        punchIn = LocalDateTime.now(); //if not punch them in
-        return punchIn; //return punch in time
+    //returns null if already punched in
+    public LocalDateTime punchIn(){
+        //check if their already punched in
+        if(this.punchIn != null) return null;
+
+        //if not punch them in
+        this.punchIn = LocalDateTime.now();
+        
+        //return punch in time
+        return this.punchIn;
     }
 
-    public Object[] punchOut(){ //returns null if not punched in
+    //returns null if already punched in
+    public LocalDateTime punchIn(LocalDateTime punchIn){
+        //check if their already punched in
+        if(this.punchIn != null) return null;
+
+        //if not punch them in
+        this.punchIn = punchIn;
+
+        //return punch in time
+        return this.punchIn;
+    }
+
+    //returns null if not punched in
+    public Object[] punchOut(){
         //check if they are already punched out
-        if(punchIn == null) return null;
+        if(this.punchIn == null) return null;
 
         //get punchout time
         LocalDateTime punchOut = LocalDateTime.now();
 
         //calc time diff
-        float diff = punchIn.until(punchOut, ChronoUnit.HOURS);
+        float diff = this.punchIn.until(punchOut, ChronoUnit.HOURS);
         incrementHoursWorked(diff); //increment by diff
 
         //generate time card
-        Object[] timecard = new Object[]{punchIn, punchOut, diff};
+        Object[] timecard = new Object[]{this.punchIn, punchOut, diff};
 
         //set employee as punched out
-        punchIn = null;
+        this.punchIn = null;
 
         //return final timecard
         return timecard;
     }
+
+    //returns null if not punched in
+    public Object[] punchOut(LocalDateTime punchOut){
+        //check if they are already punched out
+        if(this.punchIn == null) return null;
+
+        //calc time diff
+        float diff = this.punchIn.until(punchOut, ChronoUnit.HOURS);
+        incrementHoursWorked(diff); //increment by diff
+
+        //generate time card
+        Object[] timecard = new Object[]{this.punchIn, punchOut, diff};
+
+        //set employee as punched out
+        this.punchIn = null;
+
+        //return final timecard
+        return timecard;
+    }
+
     public Object[] punchTimeCard(LocalDateTime in, LocalDateTime out){
         float diff = in.until(out, ChronoUnit.HOURS);
         incrementHoursWorked(diff);
@@ -84,25 +123,5 @@ public class Employee {
     }
 
 
-    //Example using double instead of LocalDateTime (definitely not preferred)
-//    private Double punchInDouble; //using Double wrapper better indicate punched out status
-//    public Double punchIn(double in){ //returns null if already punched in
-//        if(punchInDouble != null) return null; //check if the employee is already punched out
-//        this.punchInDouble = in; //punch them in if not
-//        return punchInDouble; //return punch in time
-//    }
-//    public double[] punchOut(double out){ //returns null if not punched in
-//        if(punchInDouble == null) return null; //return null if not punched in
-//        double diff = out - punchInDouble; //calc time diff
-//        incrementHoursWorked(diff); //increment by diff
-//        double[] timecard = new double[]{punchInDouble, out, diff}; //generate timecard
-//        punchInDouble = null; //indicate employee is punched out
-//        return timecard; //return time card
-//    }
-//    public double punchTimeCard(double in, double out){
-//        double diff = out - in;
-//        incrementHoursWorked(diff);
-//        return diff;
-//    }
 
 }

@@ -39,7 +39,7 @@ public class Room {
 
     //Methods
     public boolean checkIn(){ //false if already occupied
-        if(isOccupied) return false;
+        if(isOccupied || isDirty) return false;
         isOccupied = true;
         isDirty = true;
         return true;
